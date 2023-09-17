@@ -1,5 +1,5 @@
 // Define the TemplateProcessor cla
-'use strict'
+"use strict";
 function TemplateProcessor (template) {
   this.template = template
 }
