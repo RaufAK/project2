@@ -1,14 +1,31 @@
 'use strict';
 
-var currentArray = [1,2,3];
-function filterCriteria(element){
-
-
-    // Probably a more proper way of going through indexes.
-    for(let i = 0; i < currentArray.length-1; i++){
-        if (element !== currentArray[i]){
-            delete currentArray[i];
+function MakeMultiFilter(originalArray){
+    const arrayFilterer = function (filterCriteria = undefined, callback = undefined){
+        if (arrayFilterer.currentArray === undefined){
+            arrayFilterer.currentArray = originalArray;
         }
+        if (Array.isArray(originalArray)) {
+            if ((typeof filterCriteria === "function")) {
+                arrayFilterer.currentArray =
+                    arrayFilterer.currentArray.filter(e => filterCriteria(e));
+            } else {
+                return arrayFilterer.currentArray;
+            }
+        }
+        if (typeof callback === 'function'){
+            callback.call(originalArray, arrayFilterer.currentArray);
+        }
+        return arrayFilterer;
+    };
+    return arrayFilterer;
+}
+/*function filterCriteria(element){
+    let currentArray = originalArray;
+
+    if(currentArray.includes(element) === true){
+        currentArray.remove(currentArray[i]);
+        return false;
     }
 
 
@@ -22,6 +39,9 @@ function filterCriteria(element){
     // }else {
     //     return currentArray;
     // }
-}
+    return true;
+}**/
 
-function callback() {}
+/*function callback(currentArray) {
+    this.originalArray = originalArray;
+}**/
